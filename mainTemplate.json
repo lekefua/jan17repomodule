@@ -1,1 +1,56 @@
+// mainTemplate.json
+
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "CreateResourceGroup",
+      "resourceGroup": "[parameters('mainResourceGroupName')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(parameters('moduleTemplateUri'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "resourceGroupName": {
+            "value": "[parameters('resourceGroupName')]"
+          },
+          "resourceGroupLocation": {
+            "value": "[parameters('resourceGroupLocation')]"
+          }
+        }
+      }
+    }
+  ],
+  "parameters": {
+    "mainResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the main resource group to create."
+      }
+    },
+    "moduleTemplateUri": {
+      "type": "string",
+      "metadata": {
+        "description": "URI of the module template."
+      }
+    },
+    "resourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the resource group to create using the module."
+      }
+    },
+    "resourceGroupLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for the resource group created using the module."
+      }
+    }
+  }
+}
 
